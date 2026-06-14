@@ -1,18 +1,25 @@
 package com.example.movie_watchlist;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/movies")
 public class MovieController {
 
-    @GetMapping("/movies")
+    private final MovieRepository movieRepository;
+
+    public MovieController(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
+
+    @GetMapping
     public List<Movie> getMovies() {
-        return List.of(
-                new Movie(1L, "Inception", "Christopher Nolan", 2010, "Sci-Fi", 9, true, "Mindbending!"),
-                new Movie(2L, "Interstellar", "Christopher Nolan", 2014, "Sci-Fi", 10, true, "Absolute masterpiece"),
-                new Movie(3L, "The Dark Knight 2", "Christopher Nolan", 2008, "Action", 10, true, "Best superhero movie ever")
-        );
+        return movieRepository.findAll();
+    }
+
+    @PostMapping
+    public Movie addMovie(@RequestBody Movie movie) {
+        return movieRepository.save(movie);
     }
 }

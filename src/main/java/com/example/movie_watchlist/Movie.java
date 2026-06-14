@@ -1,6 +1,15 @@
 package com.example.movie_watchlist;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Movie {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String director;
@@ -9,6 +18,8 @@ public class Movie {
     private int personalRating;
     private boolean watched;
     private String notes;
+
+    public Movie() {}
 
     public Movie(Long id, String title, String director, int releaseYear, String genre, int personalRating, boolean watched, String notes) {
         this.id = id;
